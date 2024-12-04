@@ -38,7 +38,6 @@ public class Day3 {
     return total;
   }
 
-
   static long execMul(String input) {
     var parts = input.substring(4, input.length() - 1).split(",");
     return Long.parseLong(parts[0]) * Long.parseLong(parts[1]);
