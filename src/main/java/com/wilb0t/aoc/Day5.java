@@ -1,7 +1,6 @@
 package com.wilb0t.aoc;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,32 +25,17 @@ public class Day5 {
   }
 
   static List<Integer> fixUpdate(Map<Integer, Set<Integer>> ordering, List<Integer> update) {
-    var fixed = new ArrayList<Integer>();
-    fixed.add(update.getFirst());
-    for (var page: update.subList(1, update.size())) {
-      var lidx = getLeftIdx(ordering, fixed, page);
-      var nfix = new ArrayList<Integer>();
-      if (lidx == -1) {
-        nfix.add(page);
-        nfix.addAll(fixed);
-      } else {
-        nfix.addAll(fixed.subList(0, lidx + 1));
-        nfix.add(page);
-        nfix.addAll(fixed.subList(lidx + 1, fixed.size()));
-      }
-      fixed = nfix;
-    }
-    return fixed;
-  }
-
-  static int getLeftIdx(Map<Integer, Set<Integer>> ordering, List<Integer> update, int page) {
-    var lidx = -1;
-    for (var idx = 0; idx < update.size(); idx++) {
-      if (ordering.getOrDefault(update.get(idx), Set.of()).contains(page)) {
-        lidx = idx;
-      }
-    }
-    return lidx;
+    return update.stream()
+        .sorted(
+            (l, r) -> {
+              if (ordering.containsKey(l) && ordering.get(l).contains(r)) {
+                return -1;
+              } else if (ordering.containsKey(r) && ordering.get(r).contains(l)) {
+                return 1;
+              }
+              return 0;
+            })
+        .toList();
   }
 
   static int getMiddle(List<Integer> update) {
@@ -60,7 +44,7 @@ public class Day5 {
 
   static boolean isValidUpdate(Map<Integer, Set<Integer>> ordering, List<Integer> update) {
     var seen = new ArrayDeque<Integer>();
-    for (var page: update) {
+    for (var page : update) {
       var pageOrdering = ordering.getOrDefault(page, Set.of());
       if (pageOrdering.stream().anyMatch(seen::contains)) {
         return false;
@@ -70,7 +54,9 @@ public class Day5 {
     return true;
   }
 
-  public record Input(Map<Integer, Set<Integer>> ordering, List<List<Integer>> updates) {}
+  public record Input(Map<Integer, Set<Integer>> ordering, List<List<Integer>> updates) {
+
+  }
 
   public static Input parse(List<String> input) {
     var split = input.indexOf("");
