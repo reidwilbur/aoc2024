@@ -2,7 +2,6 @@ package com.wilb0t.aoc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class Day5Test {
@@ -21,11 +20,21 @@ public class Day5Test {
   }
 
   @Test
+  public void testGetFixedMiddleSum_testInput() {
+    assertThat(Day5.getFixedMiddleSum(TEST_INPUT)).isEqualTo(123);
+  }
+
+  @Test
+  public void testGetFixedMiddleSum_puzzleInput() {
+    assertThat(Day5.getFixedMiddleSum(PUZZLE_INPUT)).isEqualTo(5723);
+  }
+
+  @Test
   public void testParse() {
     assertThat(TEST_INPUT.ordering().get(47)).containsOnly(53, 13, 61, 29);
     assertThat(TEST_INPUT.ordering().get(53)).containsOnly(29, 13);
 
-    assertThat(TEST_INPUT.updates().getFirst()).isEqualTo(List.of(75,47,61,53,29));
-    assertThat(TEST_INPUT.updates().getLast()).isEqualTo(List.of(97,13,75,29,47));
+    assertThat(TEST_INPUT.updates().getFirst()).containsExactly(75,47,61,53,29);
+    assertThat(TEST_INPUT.updates().getLast()).containsExactly(97,13,75,29,47);
   }
 }
