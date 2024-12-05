@@ -18,8 +18,9 @@ class Day1 {
   }
 
   public static int getSimilarity(Input input) {
-    var rightFreq = input.right.stream()
-        .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+    var rightFreq =
+        input.right.stream()
+            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     return input.left.stream()
         .mapToInt(entry -> entry * rightFreq.getOrDefault(entry, 0L).intValue())
         .sum();

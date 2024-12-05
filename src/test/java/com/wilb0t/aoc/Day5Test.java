@@ -34,7 +34,7 @@ public class Day5Test {
     assertThat(TEST_INPUT.ordering().get(47)).containsOnly(53, 13, 61, 29);
     assertThat(TEST_INPUT.ordering().get(53)).containsOnly(29, 13);
 
-    assertThat(TEST_INPUT.updates().getFirst()).containsExactly(75,47,61,53,29);
-    assertThat(TEST_INPUT.updates().getLast()).containsExactly(97,13,75,29,47);
+    assertThat(TEST_INPUT.updates().getFirst()).containsExactly(75, 47, 61, 53, 29);
+    assertThat(TEST_INPUT.updates().getLast()).containsExactly(97, 13, 75, 29, 47);
   }
 }

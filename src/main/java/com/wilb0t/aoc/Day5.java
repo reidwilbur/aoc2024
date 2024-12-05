@@ -54,25 +54,26 @@ public class Day5 {
     return true;
   }
 
-  public record Input(Map<Integer, Set<Integer>> ordering, List<List<Integer>> updates) {
-
-  }
+  public record Input(Map<Integer, Set<Integer>> ordering, List<List<Integer>> updates) {}
 
   public static Input parse(List<String> input) {
     var split = input.indexOf("");
-    Map<Integer, Set<Integer>> ordering = input.subList(0, split).stream()
-        .map(line -> {
-          var parts = line.split("\\|");
-          return Map.entry(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
-        })
-        .collect(
-            Collectors.toMap(
-                Map.Entry::getKey,
-                entry -> Set.of(entry.getValue()),
-                (l, r) -> Stream.concat(l.stream(), r.stream()).collect(Collectors.toSet())));
-    var updates = input.subList(split + 1, input.size()).stream()
-        .map(line -> Stream.of(line.split(",")).map(Integer::parseInt).toList())
-        .toList();
+    Map<Integer, Set<Integer>> ordering =
+        input.subList(0, split).stream()
+            .map(
+                line -> {
+                  var parts = line.split("\\|");
+                  return Map.entry(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]));
+                })
+            .collect(
+                Collectors.toMap(
+                    Map.Entry::getKey,
+                    entry -> Set.of(entry.getValue()),
+                    (l, r) -> Stream.concat(l.stream(), r.stream()).collect(Collectors.toSet())));
+    var updates =
+        input.subList(split + 1, input.size()).stream()
+            .map(line -> Stream.of(line.split(",")).map(Integer::parseInt).toList())
+            .toList();
     return new Input(ordering, updates);
   }
 }

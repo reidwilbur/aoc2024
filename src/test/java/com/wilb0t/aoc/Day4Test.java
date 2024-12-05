@@ -39,46 +39,19 @@ public class Day4Test {
 
   @Test
   public void testGetDiagLines() {
-    var input = List.of(
-        "..X...",
-        ".SAMX.",
-        ".A..A.",
-        "XMAS.S",
-        ".X....");
+    var input = List.of("..X...", ".SAMX.", ".A..A.", "XMAS.S", ".X....");
 
-    var exp = Arrays.asList(
-        ".S.S.",
-        ".AA.",
-        ".M.",
-        "XX",
-        ".",
-        ".A...",
-        "XMAS",
-        ".X.",
-        "..",
-        ".",
-        ".M.M.",
-        ".AAX",
-        "XS.",
-        "..",
-        ".",
-        ".X.AX",
-        ".AS.",
-        "...",
-        "S.",
-        ".");
+    var exp =
+        Arrays.asList(
+            ".S.S.", ".AA.", ".M.", "XX", ".", ".A...", "XMAS", ".X.", "..", ".", ".M.M.", ".AAX",
+            "XS.", "..", ".", ".X.AX", ".AS.", "...", "S.", ".");
 
     assertThat(Day4.getDiagLines(input.toArray(new String[0]))).isEqualTo(exp);
   }
 
   @Test
   public void testGetXmasCount_testInput2() {
-    var input = List.of(
-        "..X...",
-        ".SAMX.",
-        ".A..A.",
-        "XMAS.S",
-        ".X....");
+    var input = List.of("..X...", ".SAMX.", ".A..A.", "XMAS.S", ".X....");
     assertThat(Day4.getXmasCount(input.toArray(new String[0]))).isEqualTo(4);
   }
 }

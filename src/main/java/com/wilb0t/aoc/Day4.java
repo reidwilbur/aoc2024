@@ -14,11 +14,11 @@ public class Day4 {
     var cols = lines[0].length();
 
     int count = 0;
-    //rows
+    // rows
     for (String line : lines) {
       count += getXmasLineCount(line);
     }
-    //cols
+    // cols
     for (var col = 0; col < cols; col++) {
       var sb = new StringBuilder();
       for (var row = 0; row < rows; row++) {
@@ -26,7 +26,7 @@ public class Day4 {
       }
       count += getXmasLineCount(sb.toString());
     }
-    //diags
+    // diags
     var diags = getDiagLines(lines);
     for (var diag : diags) {
       var cc = getXmasLineCount(diag);
@@ -105,7 +105,7 @@ public class Day4 {
   public static boolean isX(int row, int col, String[] lines) {
     var rightDiag =
         ((lines[row + 1].charAt(col - 1) == 'M') && (lines[row - 1].charAt(col + 1) == 'S'))
-        || ((lines[row + 1].charAt(col - 1) == 'S') && (lines[row - 1].charAt(col + 1) == 'M'));
+            || ((lines[row + 1].charAt(col - 1) == 'S') && (lines[row - 1].charAt(col + 1) == 'M'));
     var leftDiag =
         ((lines[row + 1].charAt(col + 1) == 'M') && (lines[row - 1].charAt(col - 1) == 'S'))
             || ((lines[row + 1].charAt(col + 1) == 'S') && (lines[row - 1].charAt(col - 1) == 'M'));

@@ -52,10 +52,7 @@ public class Day2 {
 
   public static List<List<Integer>> parse(List<String> input) {
     return input.stream()
-        .map(row ->
-            Stream.of(row.split("\\s+"))
-                .map(Integer::parseInt)
-                .toList())
+        .map(row -> Stream.of(row.split("\\s+")).map(Integer::parseInt).toList())
         .toList();
   }
 }
