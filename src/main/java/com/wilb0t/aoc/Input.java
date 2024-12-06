@@ -79,11 +79,11 @@ public class Input {
     }
   }
 
-  public String[] loadStrings() {
+  public List<String> loadStrings() {
     try {
       var caller =
           StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).getCallerClass();
-      return getInput(caller).toArray(String[]::new);
+      return getInput(caller).toList();
     } catch (IOException | URISyntaxException e) {
       throw new RuntimeException(e);
     }

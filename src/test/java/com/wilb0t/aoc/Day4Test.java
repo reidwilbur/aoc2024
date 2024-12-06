@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 public class Day4Test {
 
-  private static final String[] TEST_INPUT = Input.TEST.loadStrings();
-  private static final String[] PUZZLE_INPUT = Input.PUZZLE.loadStrings();
+  private static final List<String> TEST_INPUT = Input.TEST.loadStrings();
+  private static final List<String> PUZZLE_INPUT = Input.PUZZLE.loadStrings();
 
   @Test
   public void testGetXmasCount_testInput() {
@@ -46,12 +46,12 @@ public class Day4Test {
             ".S.S.", ".AA.", ".M.", "XX", ".", ".A...", "XMAS", ".X.", "..", ".", ".M.M.", ".AAX",
             "XS.", "..", ".", ".X.AX", ".AS.", "...", "S.", ".");
 
-    assertThat(Day4.getDiagLines(input.toArray(new String[0]))).isEqualTo(exp);
+    assertThat(Day4.getDiagLines(input)).isEqualTo(exp);
   }
 
   @Test
   public void testGetXmasCount_testInput2() {
     var input = List.of("..X...", ".SAMX.", ".A..A.", "XMAS.S", ".X....");
-    assertThat(Day4.getXmasCount(input.toArray(new String[0]))).isEqualTo(4);
+    assertThat(Day4.getXmasCount(input)).isEqualTo(4);
   }
 }

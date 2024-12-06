@@ -1,10 +1,11 @@
 package com.wilb0t.aoc;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Day3 {
 
-  public static long getMulTotal(String[] input) {
+  public static long getMulTotal(List<String> input) {
     long total = 0;
     var pattern = Pattern.compile("mul\\(\\d+?,\\d+?\\)");
     for (var line : input) {
@@ -16,7 +17,7 @@ public class Day3 {
     return total;
   }
 
-  public static long getMulTotalWithEnables(String[] input) {
+  public static long getMulTotalWithEnables(List<String> input) {
     long total = 0;
     var pattern = Pattern.compile("mul\\(\\d+?,\\d+?\\)|do\\(\\)|don't\\(\\)");
     var enabled = true;

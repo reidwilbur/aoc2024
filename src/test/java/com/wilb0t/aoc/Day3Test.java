@@ -2,13 +2,14 @@ package com.wilb0t.aoc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class Day3Test {
 
-  private static final String[] TEST_INPUT = Input.TEST.loadStrings();
-  private static final String[] TEST_INPUT2 = new Input("-test2").loadStrings();
-  private static final String[] PUZZLE_INPUT = Input.PUZZLE.loadStrings();
+  private static final List<String> TEST_INPUT = Input.TEST.loadStrings();
+  private static final List<String> TEST_INPUT2 = new Input("-test2").loadStrings();
+  private static final List<String> PUZZLE_INPUT = Input.PUZZLE.loadStrings();
 
   @Test
   public void testGetMulTotal_testInput() {
