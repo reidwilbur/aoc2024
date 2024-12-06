@@ -18,4 +18,14 @@ public class Day6Test {
   public void testGetPositionCount_puzzleInput() {
     assertThat(Day6.getPositionCount(PUZZLE_INPUT)).isEqualTo(4964);
   }
+
+  @Test
+  public void testLoopObstacleCount_testInput() {
+    assertThat(Day6.getLoopObstacleCount(TEST_INPUT)).isEqualTo(6);
+  }
+
+  @Test
+  public void testLoopObstacleCount_puzzleInput() {
+    assertThat(Day6.getLoopObstacleCount(PUZZLE_INPUT)).isEqualTo(1740);
+  }
 }
