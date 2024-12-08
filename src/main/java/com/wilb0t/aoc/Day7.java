@@ -12,6 +12,49 @@ public class Day7 {
         .sum();
   }
 
+  public static long getCalResultConcat(List<Calibration> input) {
+    return input.stream()
+        .filter(Day7::isValidConcat)
+        .mapToLong(cal -> cal.result)
+        .sum();
+  }
+
+  static boolean isValidConcat(Calibration calibration) {
+    long perms = 1L << (2L * (calibration.nums.size() - 1L));
+    for (long perm = 0; perm < perms; perm++) {
+      long acc = calibration.nums.getFirst();
+      for (int idx = 1; idx < calibration.nums.size() && acc < calibration.result; idx++) {
+        var op = (perm >> ((idx - 1) * 2)) & 0x3;
+        if (op > 2) {
+          break;
+        }
+        switch (op) {
+          case 0L -> acc *= calibration.nums.get(idx);
+          case 1L -> acc += calibration.nums.get(idx);
+          case 2L -> acc = concat(acc, calibration.nums.get(idx));
+          default -> throw new RuntimeException();
+        }
+      }
+      if (acc == calibration.result) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static long concat(long l, long r) {
+    int pow = 1;
+    long work = r;
+    while (work >= 10) {
+      work /= 10;
+      pow += 1;
+    }
+    for (var idx = 0; idx < pow; idx++) {
+      l *= 10;
+    }
+    return l + r;
+  }
+
   static boolean isValid(Calibration calibration) {
     var perms = 1 << (calibration.nums.size() - 1);
     for (var perm = 0; perm <= perms ; perm++) {
