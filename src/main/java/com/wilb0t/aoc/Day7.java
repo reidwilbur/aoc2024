@@ -1,43 +1,37 @@
 package com.wilb0t.aoc;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Day7 {
 
   public static long getCalResult(List<Calibration> input) {
-    return input.stream()
-        .filter(Day7::isValid)
-        .mapToLong(cal -> cal.result)
-        .sum();
+    return input.stream().filter(Day7::isValid).mapToLong(cal -> cal.result).sum();
   }
 
   public static long getCalResultConcat(List<Calibration> input) {
-    return input.stream()
-        .filter(Day7::isValidConcat)
-        .mapToLong(cal -> cal.result)
-        .sum();
+    return input.stream().filter(Day7::isValidConcat).mapToLong(cal -> cal.result).sum();
   }
 
   static boolean isValidConcat(Calibration calibration) {
-    long perms = 1L << (2L * (calibration.nums.size() - 1L));
-    for (long perm = 0; perm < perms; perm++) {
+    var perm = new Op[calibration.nums.size() - 1];
+    Arrays.fill(perm, Op.values()[0]);
+    var done = false;
+    while (!done) {
       long acc = calibration.nums.getFirst();
-      for (int idx = 1; idx < calibration.nums.size() && acc < calibration.result; idx++) {
-        var op = (perm >> ((idx - 1) * 2)) & 0x3;
-        if (op > 2) {
-          break;
-        }
+      for (int idx = 1; idx < calibration.nums.size(); idx++) {
+        var op = perm[idx - 1];
         switch (op) {
-          case 0L -> acc *= calibration.nums.get(idx);
-          case 1L -> acc += calibration.nums.get(idx);
-          case 2L -> acc = concat(acc, calibration.nums.get(idx));
-          default -> throw new RuntimeException();
+          case ADD -> acc *= calibration.nums.get(idx);
+          case MUL -> acc += calibration.nums.get(idx);
+          case CCT -> acc = concat(acc, calibration.nums.get(idx));
         }
       }
       if (acc == calibration.result) {
         return true;
       }
+      done = !nextPerm(perm);
     }
     return false;
   }
@@ -55,9 +49,27 @@ public class Day7 {
     return l + r;
   }
 
+  enum Op {
+    ADD,
+    MUL,
+    CCT
+  };
+
+  static boolean nextPerm(Op[] curr) {
+    for (var idx = 0; idx < curr.length; idx++) {
+      if (curr[idx].ordinal() < Op.values().length - 1) {
+        curr[idx] = Op.values()[curr[idx].ordinal() + 1];
+        return true;
+      } else {
+        curr[idx] = Op.values()[0];
+      }
+    }
+    return false;
+  }
+
   static boolean isValid(Calibration calibration) {
     var perms = 1 << (calibration.nums.size() - 1);
-    for (var perm = 0; perm <= perms ; perm++) {
+    for (var perm = 0; perm <= perms; perm++) {
       long acc = calibration.nums.getFirst();
       for (var idx = 1; idx < calibration.nums.size(); idx++) {
         switch ((perm & (0x1 << (idx - 1))) != 0) {

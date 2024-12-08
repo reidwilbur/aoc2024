@@ -18,4 +18,14 @@ public class Day8Test {
   public void testGetAntiNodeCount_puzzleInput() {
     assertThat(Day8.getAntiNodeCount(PUZZLE_INPUT)).isEqualTo(285);
   }
+
+  @Test
+  public void testGetAntiNodeHarmCount_testInput() {
+    assertThat(Day8.getAntiNodeHarmCount(TEST_INPUT)).isEqualTo(34);
+  }
+
+  @Test
+  public void testGetAntiNodeHarmCount_puzzleInput() {
+    assertThat(Day8.getAntiNodeHarmCount(PUZZLE_INPUT)).isEqualTo(944);
+  }
 }

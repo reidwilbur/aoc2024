@@ -28,7 +28,6 @@ public class Day7Test {
 
   @Test
   public void testGetCalResultConcat_puzzleInput() {
-    //assertThat(Day7.getCalResultConcat(PUZZLE_INPUT)).isLessThan(116161449641293L);
-    assertThat(Day7.getCalResultConcat(PUZZLE_INPUT)).isLessThan(116159647288295L);
+    assertThat(Day7.getCalResultConcat(PUZZLE_INPUT)).isEqualTo(116094961956019L);
   }
 }
