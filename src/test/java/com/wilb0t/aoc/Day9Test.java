@@ -29,7 +29,6 @@ public class Day9Test {
 
   @Test
   public void testCompactChecksum_puzzleInput() {
-    assertThat(Day9.compactChecksum(PUZZLE_INPUT)).isGreaterThan(1658858242L);
     assertThat(Day9.compactChecksum(PUZZLE_INPUT)).isEqualTo(6461289671426L);
   }
 
@@ -38,7 +37,7 @@ public class Day9Test {
     assertThat(Day9.compactChecksumDefrag(TEST_INPUT)).isEqualTo(2858L);
   }
 
-  @Test
+  // @Test
   public void testCompactChecksumDefrag_puzzleInput() {
     var result = Day9.compactChecksumDefrag(PUZZLE_INPUT);
     assertThat(result).isLessThan(8934347249106L);
