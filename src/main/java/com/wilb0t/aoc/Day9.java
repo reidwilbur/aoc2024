@@ -1,8 +1,6 @@
 package com.wilb0t.aoc;
 
 import java.util.Arrays;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Day9 {
 
@@ -21,26 +19,36 @@ public class Day9 {
 
   public static long compactChecksumDefrag(String input) {
     var unpacked = unpack(input);
-    var freeSpaces = getFreeSpace(unpacked);
     var maxId = getMaxId(unpacked);
     var ofs = unpacked.length - 1;
 
     for (var id = maxId; id >= 0; id--) {
       var file = getFile(unpacked, ofs, id);
       ofs = file.ofs;
-      var maybeSpace = freeSpaces.stream().filter(fs -> fs.len >= file.len).findFirst();
-      if (maybeSpace.isPresent()) {
-        var space = maybeSpace.get();
-        freeSpaces.remove(space);
-        Arrays.fill(unpacked, space.ofs, space.ofs + file.len, file.id);
+      var freeIdx = getLeftFreeSpace(unpacked, file.len, file.ofs);
+      if (freeIdx != -1) {
+        Arrays.fill(unpacked, freeIdx, freeIdx + file.len, file.id);
         Arrays.fill(unpacked, file.ofs, file.ofs + file.len, -1);
-        if (file.len < space.len) {
-          var remnant = new FreeSpace(space.ofs + file.len, space.len - file.len);
-          freeSpaces.add(remnant);
-        }
       }
     }
     return checksum(unpacked);
+  }
+
+  static int getLeftFreeSpace(int[] dmap, int len, int ofsLimit) {
+    var start = 0;
+    while (start < ofsLimit) {
+      if (dmap[start] == -1) {
+        var end = start + 1;
+        while (end < ofsLimit && dmap[end] == -1) {
+          end += 1;
+        }
+        if (end - start >= len) {
+          return start;
+        }
+      }
+      start += 1;
+    }
+    return -1;
   }
 
   static long checksum(int[] bmap) {
@@ -99,29 +107,6 @@ public class Day9 {
   }
 
   record File(int id, int ofs, int len) {}
-
-  record FreeSpace(int ofs, int len) implements Comparable<FreeSpace> {
-
-    @Override
-    public int compareTo(FreeSpace o) {
-      return Integer.compare(ofs, o.ofs);
-    }
-  }
-
-  static SortedSet<FreeSpace> getFreeSpace(int[] dmap) {
-    var freeSpaces = new TreeSet<FreeSpace>();
-    var start = -1;
-    for (var idx = 0; idx < dmap.length; idx++) {
-      if (dmap[idx] == -1 && start == -1) {
-        start = idx;
-      }
-      if (dmap[idx] != -1 && start != -1) {
-        freeSpaces.add(new FreeSpace(start, idx - start));
-        start = -1;
-      }
-    }
-    return freeSpaces;
-  }
 
   static int[] unpack(String input) {
     var len = 0;
