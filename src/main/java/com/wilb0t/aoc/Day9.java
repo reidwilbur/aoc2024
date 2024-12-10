@@ -20,11 +20,11 @@ public class Day9 {
   public static long compactChecksumDefrag(String input) {
     var unpacked = unpack(input);
     var maxId = getMaxId(unpacked);
-    var ofs = unpacked.length - 1;
+    var lastFileOfs = unpacked.length - 1;
 
     for (var id = maxId; id >= 0; id--) {
-      var file = getFile(unpacked, ofs, id);
-      ofs = file.ofs;
+      var file = getFile(unpacked, lastFileOfs, id);
+      lastFileOfs = file.ofs;
       var freeIdx = getLeftFreeSpace(unpacked, file.len, file.ofs);
       if (freeIdx != -1) {
         Arrays.fill(unpacked, freeIdx, freeIdx + file.len, file.id);
@@ -45,8 +45,10 @@ public class Day9 {
         if (end - start >= len) {
           return start;
         }
+        start = end + 1;
+      } else {
+        start += 1;
       }
-      start += 1;
     }
     return -1;
   }
