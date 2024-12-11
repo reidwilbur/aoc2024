@@ -23,4 +23,10 @@ public class Day11Test {
     var count = Day11.getStoneCount(25, PUZZLE_INPUT);
     assertThat(count).isEqualTo(197357);
   }
+
+  @Test
+  public void testGetStoneCount_puzzleInput_75rounds() {
+    var count = Day11.getStoneCount(75, PUZZLE_INPUT);
+    assertThat(count).isEqualTo(234568186890978L);
+  }
 }
