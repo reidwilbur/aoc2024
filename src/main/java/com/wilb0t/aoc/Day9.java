@@ -22,27 +22,27 @@ public class Day9 {
     var maxId = getMaxId(unpacked);
     var lastFileOfs = unpacked.length - 1;
 
-    for (var id = maxId; id >= 0; id--) {
+    for (var id = maxId; id > 0; id--) {
       var file = getFile(unpacked, lastFileOfs, id);
       lastFileOfs = file.ofs;
-      var freeIdx = getLeftFreeSpace(unpacked, file.len, file.ofs);
-      if (freeIdx != -1) {
-        Arrays.fill(unpacked, freeIdx, freeIdx + file.len, file.id);
+      var freeOfs = findFreeSpaceForFile(unpacked, file);
+      if (freeOfs != -1) {
+        Arrays.fill(unpacked, freeOfs, freeOfs + file.len, file.id);
         Arrays.fill(unpacked, file.ofs, file.ofs + file.len, -1);
       }
     }
     return checksum(unpacked);
   }
 
-  static int getLeftFreeSpace(int[] dmap, int len, int ofsLimit) {
+  static int findFreeSpaceForFile(int[] dmap, File file) {
     var start = 0;
-    while (start < ofsLimit) {
+    while (start < file.ofs) {
       if (dmap[start] == -1) {
         var end = start + 1;
-        while (end < ofsLimit && dmap[end] == -1) {
+        while (end < file.ofs && dmap[end] == -1) {
           end += 1;
         }
-        if (end - start >= len) {
+        if (end - start >= file.len) {
           return start;
         }
         start = end + 1;
