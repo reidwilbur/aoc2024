@@ -16,7 +16,21 @@ public class Day13Test {
   }
 
   @Test
-  public void testGetTokens_puzzlenput() {
+  public void testGetTokens_puzzleInput() {
     assertThat(Day13.getTokens(PUZZLE_INPUT)).isEqualTo(28138L);
+  }
+
+  @Test
+  public void testGetTokensForWin() {
+    assertThat(Day13.getTokensForWin(TEST_INPUT.getFirst(), 10000000000000L)).isEqualTo(Long.MAX_VALUE);
+    assertThat(Day13.getTokensForWin(TEST_INPUT.get(1), 10000000000000L)).isNotEqualTo(Long.MAX_VALUE);
+    assertThat(Day13.getTokensForWin(TEST_INPUT.get(2), 10000000000000L)).isEqualTo(Long.MAX_VALUE);
+    assertThat(Day13.getTokensForWin(TEST_INPUT.get(3), 10000000000000L)).isNotEqualTo(Long.MAX_VALUE);
+  }
+
+  @Test
+  public void testGetTokensWithOfs_puzzleInput() {
+    var tokens = Day13.getTokensWithOfs(PUZZLE_INPUT);
+    assertThat(tokens).isEqualTo(108394825772874L);
   }
 }

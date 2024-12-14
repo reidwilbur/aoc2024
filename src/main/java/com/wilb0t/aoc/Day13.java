@@ -7,24 +7,29 @@ public class Day13 {
 
   public static long getTokens(List<Config> configs) {
     return configs.stream()
-        .mapToLong(Day13::getTokensForWin)
-        .filter(i -> i < Long.MAX_VALUE)
+        .mapToLong(cfg -> getTokensForWin(cfg, 0))
+        .filter(i -> i != Long.MAX_VALUE)
         .sum();
   }
 
-  static long getTokensForWin(Config config) {
-    var minTokens = Long.MAX_VALUE;
-    for (var apress = 0; apress < 100; apress++) {
-      for (var bpress = 0; bpress < 100; bpress++) {
-        var xloc = config.ax * apress + config.bx * bpress;
-        var yloc = config.ay * apress + config.by * bpress;
-        if (xloc == config.px && yloc == config.py) {
-          var tokens = apress * 3 + bpress;
-          minTokens = Math.min(minTokens, tokens);
-        }
-      }
+  public static long getTokensWithOfs(List<Config> configs) {
+    return configs.stream()
+        .mapToLong(cfg -> getTokensForWin(cfg, 10000000000000L))
+        .filter(i -> i != Long.MAX_VALUE)
+        .sum();
+  }
+
+  static long getTokensForWin(Config config, long ofs) {
+    long an = (config.px + ofs) * config.by - config.bx * (config.py + ofs);
+    long bn = config.ax * (config.py + ofs) - (config.px + ofs) * config.ay;
+
+    long d = (long)config.ax * config.by - (long)config.bx * config.ay;
+
+    if ((an % d == 0L) && (bn % d == 0L)) {
+      return (3L * (an / d)) + (bn / d);
     }
-    return minTokens;
+
+    return Long.MAX_VALUE;
   }
 
   public record Config(int ax, int ay, int bx, int by, int px, int py) {
@@ -56,7 +61,7 @@ public class Day13 {
         configLines.add(line);
       }
     }
+    configs.add(Config.from(configLines));
     return configs;
   }
-
 }
