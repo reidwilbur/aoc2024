@@ -22,10 +22,13 @@ public class Day13Test {
 
   @Test
   public void testGetTokensForWin() {
-    assertThat(Day13.getTokensForWin(TEST_INPUT.getFirst(), 10000000000000L)).isEqualTo(Long.MAX_VALUE);
-    assertThat(Day13.getTokensForWin(TEST_INPUT.get(1), 10000000000000L)).isNotEqualTo(Long.MAX_VALUE);
+    assertThat(Day13.getTokensForWin(TEST_INPUT.getFirst(), 10000000000000L))
+        .isEqualTo(Long.MAX_VALUE);
+    assertThat(Day13.getTokensForWin(TEST_INPUT.get(1), 10000000000000L))
+        .isNotEqualTo(Long.MAX_VALUE);
     assertThat(Day13.getTokensForWin(TEST_INPUT.get(2), 10000000000000L)).isEqualTo(Long.MAX_VALUE);
-    assertThat(Day13.getTokensForWin(TEST_INPUT.get(3), 10000000000000L)).isNotEqualTo(Long.MAX_VALUE);
+    assertThat(Day13.getTokensForWin(TEST_INPUT.get(3), 10000000000000L))
+        .isNotEqualTo(Long.MAX_VALUE);
   }
 
   @Test

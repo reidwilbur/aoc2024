@@ -23,7 +23,7 @@ public class Day13 {
     long an = (config.px + ofs) * config.by - config.bx * (config.py + ofs);
     long bn = config.ax * (config.py + ofs) - (config.px + ofs) * config.ay;
 
-    long d = (long)config.ax * config.by - (long)config.bx * config.ay;
+    long d = (long) config.ax * config.by - (long) config.bx * config.ay;
 
     if ((an % d == 0L) && (bn % d == 0L)) {
       return (3L * (an / d)) + (bn / d);

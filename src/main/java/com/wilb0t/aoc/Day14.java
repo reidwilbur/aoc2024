@@ -1,7 +1,11 @@
 package com.wilb0t.aoc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Day14 {
 
@@ -32,10 +36,33 @@ public class Day14 {
 
   public static int getTreeTime(List<Robot> input, int width, int height) {
     var t = 1;
-    while (!quadsEqual(input, t, width, height)) {
-      t += 1;
+    // while (!quadsEqual(input, t, width, height)) {
+    while (t < 1000000000L) {
+      System.out.println(t);
+      printRobots(input, t, width, height);
+      t += 10000;
     }
     return t;
+  }
+
+  static void printRobots(List<Robot> robots, int t, int width, int height) {
+    var disp = new char[height][width];
+    for (var row = 0; row < height; row++) {
+      disp[row] = new char[width];
+      Arrays.fill(disp[row], '.');
+    }
+    for (var robot : robots) {
+      var px = ((robot.vx * t) + robot.px) % width;
+      var py = ((robot.vy * t) + robot.py) % height;
+      px = (px < 0) ? width + px : px;
+      py = (py < 0) ? height + py : py;
+      disp[py][px] = '*';
+    }
+    for (var row = 0; row < height; row++) {
+      System.out.println(disp[row]);
+    }
+    System.out.println();
+    System.out.println();
   }
 
   static boolean quadsEqual(List<Robot> input, int t, int width, int height) {
@@ -61,6 +88,25 @@ public class Day14 {
       }
     }
     return loLt == loRt && hiLt == hiRt;
+  }
+
+  static boolean isReflection(List<Robot> input, int t, int width, int height) {
+    var widthHalf = width / 2;
+    var left = new HashSet<Entry<Integer, Integer>>();
+    var right = new HashSet<Entry<Integer, Integer>>();
+
+    for (Robot robot : input) {
+      var px = ((robot.vx * t) + robot.px) % width;
+      var py = ((robot.vy * t) + robot.py) % height;
+      px = (px < 0) ? width + px : px;
+      py = (py < 0) ? height + py : py;
+      if (px < widthHalf) {
+        left.add(Map.entry(px, py));
+      } else if (px > widthHalf) {
+        right.add(Map.entry(width - px, py));
+      }
+    }
+    return left.equals(right);
   }
 
   public record Robot(int px, int py, int vx, int vy) {}

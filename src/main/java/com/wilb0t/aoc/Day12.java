@@ -48,13 +48,15 @@ public class Day12 {
 
   record Coord(int r, int c) {
     public List<Coord> nbors(int rows, int cols) {
-      return Stream.of(new Coord(r - 1, c), new Coord(r + 1, c), new Coord(r, c - 1), new Coord(r, c + 1))
+      return Stream.of(
+              new Coord(r - 1, c), new Coord(r + 1, c), new Coord(r, c - 1), new Coord(r, c + 1))
           .filter(c -> c.isValid(rows, cols))
           .toList();
     }
 
     public Stream<Coord> nbors() {
-      return Stream.of(new Coord(r - 1, c), new Coord(r + 1, c), new Coord(r, c - 1), new Coord(r, c + 1));
+      return Stream.of(
+          new Coord(r - 1, c), new Coord(r + 1, c), new Coord(r, c - 1), new Coord(r, c + 1));
     }
 
     public boolean isValid(int rows, int cols) {
@@ -67,14 +69,8 @@ public class Day12 {
   }
 
   static long getWallCount(Set<Coord> region) {
-    var rowstats =
-        region.stream()
-            .mapToInt(Coord::r)
-            .summaryStatistics();
-    var colstats =
-        region.stream()
-            .mapToInt(Coord::c)
-            .summaryStatistics();
+    var rowstats = region.stream().mapToInt(Coord::r).summaryStatistics();
+    var colstats = region.stream().mapToInt(Coord::c).summaryStatistics();
 
     var minRow = rowstats.getMin();
     var maxRow = rowstats.getMax();
@@ -160,9 +156,11 @@ public class Day12 {
     var cols = garden[0].length;
     long perimeter = 0;
     for (var coord : region) {
-      var edges = coord.nbors()
-          .filter(n -> !n.isValid(rows, cols) || garden[n.r][n.c] != garden[coord.r][coord.c])
-          .count();
+      var edges =
+          coord
+              .nbors()
+              .filter(n -> !n.isValid(rows, cols) || garden[n.r][n.c] != garden[coord.r][coord.c])
+              .count();
       perimeter += edges;
     }
     return perimeter * region.size();

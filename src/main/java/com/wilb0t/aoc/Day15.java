@@ -56,13 +56,18 @@ public class Day15 {
     return false;
   }
 
-  public enum Dir { UP, RT, DN, LT }
+  public enum Dir {
+    UP,
+    RT,
+    DN,
+    LT
+  }
 
   public record Pos(int row, int col) {
     public Pos next(Dir dir) {
       return switch (dir) {
         case UP -> new Pos(row - 1, col);
-        case RT -> new Pos(row , col + 1);
+        case RT -> new Pos(row, col + 1);
         case DN -> new Pos(row + 1, col);
         case LT -> new Pos(row, col - 1);
       };

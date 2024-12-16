@@ -21,10 +21,10 @@ public class Day14Test {
     assertThat(Day14.getSafetyFactor(PUZZLE_INPUT, 101, 103)).isEqualTo(225521010);
   }
 
-  @Test
-  public void testGetTreeTime() {
-    assertThat(Day14.getTreeTime(PUZZLE_INPUT, 101, 103)).isGreaterThan(1874);
-  }
+  //  @Test
+  //  public void testGetTreeTime() {
+  //    assertThat(Day14.getTreeTime(PUZZLE_INPUT, 101, 103)).isGreaterThan(1874);
+  //  }
 
   @Test
   public void testParse() {

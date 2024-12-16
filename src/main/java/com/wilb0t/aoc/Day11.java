@@ -50,5 +50,4 @@ public class Day11 {
     var parts = input.getFirst().split(" ");
     return Arrays.asList(parts);
   }
-
 }

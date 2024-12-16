@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,9 +24,13 @@ public class Input {
   }
 
   Stream<String> getInput(Class<?> caller) throws URISyntaxException, IOException {
-    var pathStr = "/" + caller.getName().replace('.', '/').replace("Test", "") + suffix + ".txt";
-    var path = Path.of(Objects.requireNonNull(Input.class.getResource(pathStr)).toURI());
-    return Files.readAllLines(path, StandardCharsets.UTF_8).stream();
+    var fullname = Path.of(caller.getName().replace('.', '/')); // .replace("Test", ""));
+    var dayName = fullname.getFileName().toString().replace("Test", "");
+    var dayDir = dayName.toLowerCase(Locale.ENGLISH);
+    var resPath = Path.of("/", fullname.getParent().toString(), dayDir, dayName + suffix + ".txt");
+    var filePath =
+        Path.of(Objects.requireNonNull(Input.class.getResource(resPath.toString())).toURI());
+    return Files.readAllLines(filePath, StandardCharsets.UTF_8).stream();
   }
 
   public int[] loadInts() {

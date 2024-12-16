@@ -1,6 +1,5 @@
 package com.wilb0t.aoc;
 
-
 import static com.wilb0t.aoc.Day15.Dir.DN;
 import static com.wilb0t.aoc.Day15.Dir.LT;
 import static com.wilb0t.aoc.Day15.Dir.RT;

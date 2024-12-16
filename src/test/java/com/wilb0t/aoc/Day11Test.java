@@ -9,7 +9,8 @@ public class Day11Test {
 
   private static final List<String> TEST_INPUT = Day11.parse(List.of("0 1 10 99 999"));
   private static final List<String> TEST_INPUT2 = Day11.parse(List.of("125 17"));
-  private static final List<String> PUZZLE_INPUT = Day11.parse(List.of("4610211 4 0 59 3907 201586 929 33750"));
+  private static final List<String> PUZZLE_INPUT =
+      Day11.parse(List.of("4610211 4 0 59 3907 201586 929 33750"));
 
   @Test
   public void testGetStoneCount_testInput() {
