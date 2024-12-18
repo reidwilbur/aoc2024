@@ -1,10 +1,10 @@
 package com.wilb0t.aoc;
 
-import java.util.ArrayDeque;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.stream.Stream;
 
 public class Day16 {
@@ -28,6 +28,25 @@ public class Day16 {
     return shortestPath;
   }
 
+  public static long getBestSeatCount(char[][] maze) {
+    return 0;
+  }
+
+  static void display(char[][] maze, Set<Pos> seats) {
+    for (var row = 0; row < maze.length; row++) {
+      var sb = new StringBuilder();
+      for (var col = 0; col < maze[0].length; col++) {
+        if (seats.contains(new Pos(row, col))) {
+          sb.append('O');
+        } else {
+          sb.append(maze[row][col]);
+        }
+      }
+      System.out.println(sb);
+    }
+    System.out.println();
+  }
+
   static Pos getPos(char[][] maze, char label) {
     for (var row = 0; row < maze.length; row++) {
       for (var col = 0; col < maze[0].length; col++) {
@@ -45,10 +64,10 @@ public class Day16 {
       var ccw = Dir.values()[(this.dir.ordinal() + 3) % Dir.values().length];
       var rev = Dir.values()[(this.dir.ordinal() + 2) % Dir.values().length];
       return Stream.of(
-          new State(this.pos.next(this.dir), this.dir, this.score + 1),
-          new State(this.pos.next(cw), cw, this.score + 1 + 1000),
-          new State(this.pos.next(ccw), ccw, this.score + 1 + 1000),
-          new State(this.pos.next(rev), rev, this.score + 1 + 2000))
+              new State(this.pos.next(this.dir), this.dir, this.score + 1),
+              new State(this.pos.next(cw), cw, this.score + 1 + 1000),
+              new State(this.pos.next(ccw), ccw, this.score + 1 + 1000),
+              new State(this.pos.next(rev), rev, this.score + 1 + 2000))
           .filter(s -> maze[s.pos.row][s.pos.col] != '#')
           .toList();
     }
@@ -65,5 +84,10 @@ public class Day16 {
     }
   }
 
-  public enum Dir { N, E, S, W }
+  public enum Dir {
+    N,
+    E,
+    S,
+    W
+  }
 }
