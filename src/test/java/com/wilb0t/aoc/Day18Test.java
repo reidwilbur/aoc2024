@@ -20,4 +20,14 @@ public class Day18Test {
   public void testGetMinSteps_puzzleInput() {
     assertThat(Day18.getMinSteps(PUZZLE_INPUT.subList(0, 1024), 71, 71)).isEqualTo(278);
   }
+
+  @Test
+  public void testBlocker_testInput() {
+    assertThat(Day18.getBlocker(12, TEST_INPUT, 7, 7)).isEqualTo(new Pos(1, 6));
+  }
+
+  @Test
+  public void testBlocker_puzzleInput() {
+    assertThat(Day18.getBlocker(1024, PUZZLE_INPUT, 71, 71)).isEqualTo(new Pos(12, 43));
+  }
 }
