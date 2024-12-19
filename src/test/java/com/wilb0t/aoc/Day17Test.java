@@ -1,8 +1,11 @@
 package com.wilb0t.aoc;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
+import static org.assertj.core.api.Assertions.setPrintAssertionsDescription;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 public class Day17Test {
@@ -52,7 +55,26 @@ public class Day17Test {
   }
 
   @Test
-  public void testOutput_PuzzleInput() {
+  public void testOutput_puzzleInput() {
     assertThat(Day17.concatOutput(PUZZLE_INPUT)).isEqualTo("4,0,4,7,1,2,7,1,6");
+  }
+
+  @Test
+  public void testOutputSame_testInput() {
+    var input = new Day17.Input(117440, 0 , 0, List.of(0,3,5,4,3,0));
+    assertThat(Day17.concatOutput(input)).isEqualTo("0,3,5,4,3,0");
+
+    //assertThat(Day17.findRegAVal(input)).isEqualTo(117440);
+  }
+
+  @Test
+  public void testOutputSame_puzzleInput() {
+    //var start = (long)Math.pow(8, 15) + 0b111;
+    //var start = (long)Math.pow(8, 15) + (32L) + 0b101L;
+    var start = (long)Math.pow(8, 15) + (0b101L << 3*15);
+    var expOut = PUZZLE_INPUT.mem().stream().map(i -> (long)i).toList();
+    var input = new Day17.Input(start + 0b111, PUZZLE_INPUT.regB(), PUZZLE_INPUT.regC(), PUZZLE_INPUT.mem());
+    var out = Day17.getOutput(input);
+    assertThat(out).isEqualTo(expOut);
   }
 }

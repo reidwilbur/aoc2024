@@ -1,5 +1,6 @@
 package com.wilb0t.aoc;
 
+import java.nio.file.LinkPermission;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,15 +14,33 @@ public class Day17 {
     return compy.out.stream().map(Object::toString).collect(Collectors.joining(","));
   }
 
+  public static List<Long> getOutput(Input input) {
+    var compy = new ThreeBitCompy(input.regA, input.regB, input.regC, input.mem);
+    compy.run();
+    return compy.out;
+  }
+
+//  public static long findRegAVal(Input input) {
+//    var out = List.<Long>of();
+//    var regA = 0;
+//    while (!input.mem.equals(out) && regA >= 0) {
+//      var compy = new ThreeBitCompy(regA, input.regB, input.regC, input.mem);
+//      compy.run();
+//      out = compy.out;
+//      regA += 1;
+//    }
+//    return regA - 1;
+//  }
+
   static class ThreeBitCompy {
-    int regA;
-    int regB;
-    int regC;
+    long regA;
+    long regB;
+    long regC;
     int ip = 0;
     List<Integer> mem;
-    List<Integer> out;
+    List<Long> out;
 
-    public ThreeBitCompy(int regA, int regB, int regC, List<Integer> mem) {
+    public ThreeBitCompy(long regA, long regB, long regC, List<Integer> mem) {
       this.regA = regA;
       this.regB = regB;
       this.regC = regC;
@@ -75,7 +94,7 @@ public class Day17 {
       }
     }
 
-    int getComboValue(int comboOperand) {
+    long getComboValue(int comboOperand) {
       return switch(comboOperand) {
         case int n when n >= 0 && n <= 3 -> n;
         case 4 -> regA;
@@ -86,7 +105,7 @@ public class Day17 {
     }
   }
 
-  public record Input(int regA, int regB, int regC, List<Integer> mem) {}
+  public record Input(long regA, long regB, long regC, List<Integer> mem) {}
 
   public static Input parse(List<String> input) {
     var regA = Integer.parseInt(input.getFirst().split(": ")[1]);

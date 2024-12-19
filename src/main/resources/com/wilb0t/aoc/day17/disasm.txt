@@ -1,0 +1,31 @@
+                 loop:
+2,4, bst regA      b = a % 8
+1,1, bxl 1         b = b ^ 1
+7,5, cdv regB      c = a / 2^b  // c = a >> b ?
+0,3, adv 3         a = a / 2^3  // a = a >> 3 ?
+1,4, bxl 4         b = b ^ 4
+4,5, bxc 5         b = b ^ c
+5,5, out regB      out b
+3,0  jnz 0         if (a != 0)
+                     jmp loop
+
+to loop enough times to make 16 outs need a >= 8^15 a < 8^16
+
+first out must = 2 so b = 2
+2 = (((a % 8) ^ 0b101) ^ (a / pow(2, ((a % 8) ^ 1)))
+
+111
+110
+010
+010  000
+
+(000 << 6) + 111
+
+101
+100
+000
+000 010
+(010 << 4) + 101
+
+
+(101 << 3*15)
