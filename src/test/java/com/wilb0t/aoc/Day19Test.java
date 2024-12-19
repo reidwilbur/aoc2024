@@ -18,4 +18,14 @@ public class Day19Test {
   public void testGetValidDesignCount_puzzleInput() {
     assertThat(Day19.getValidDesignCount(PUZZLE_INPUT)).isEqualTo(304);
   }
+
+  @Test
+  public void testGetValidDesignCombos_testInput() {
+    assertThat(Day19.getValidDesignCombos(TEST_INPUT)).isEqualTo(16);
+  }
+
+  @Test
+  public void testGetValidDesignCombos_puzzleInput() {
+    assertThat(Day19.getValidDesignCombos(PUZZLE_INPUT)).isEqualTo(705756472327497L);
+  }
 }
