@@ -24,6 +24,23 @@ public class Day20 {
     return cheats.entrySet().stream().collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
   }
 
+  public static Map<Integer, Long> getLongCheats(char[][] map) {
+    var path = getPath(map);
+    var cheats = new HashMap<Cheat, Integer>();
+    for (Pos pos : path.time.keySet()) {
+      for (Pos cheat : pos.cheats20ps(path.time)) {
+        var first = (path.time.get(pos) > path.time.get(cheat)) ? cheat : pos;
+        var last = (path.time.get(pos) > path.time.get(cheat)) ? pos : cheat;
+        var dist = Math.abs(last.row - first.row) + Math.abs(last.col - first.col);
+        var cheatTime = path.time.get(last) - path.time.get(first) - dist;
+        if (cheatTime > 0) {
+          cheats.put(new Cheat(first, last), cheatTime);
+        }
+      }
+    }
+    return cheats.entrySet().stream().collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
+  }
+
   record Cheat(Pos start, Pos end) {}
 
   static Path getPath(char[][] map) {
@@ -86,6 +103,21 @@ public class Day20 {
       cheatEnd = new Pos(row, col - 2);
       if (map[row][col - 1] == '#' && path.contains(cheatEnd)) {
         cheats.add(cheatEnd);
+      }
+      return cheats;
+    }
+
+    public List<Pos> cheats20ps(Map<Pos, Integer> path) {
+      var cheats = new ArrayList<Pos>();
+      var curTime = path.get(this);
+      for (var next : path.keySet()) {
+        var nextTime = path.get(next);
+        if (nextTime > curTime) {
+          var mapDist = Math.abs(next.row - row) + Math.abs(next.col - col);
+          if (mapDist >= 2 && mapDist <= 20) {
+            cheats.add(next);
+          }
+        }
       }
       return cheats;
     }

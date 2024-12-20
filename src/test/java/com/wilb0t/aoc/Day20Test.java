@@ -11,7 +11,7 @@ public class Day20Test {
   private static final char[][] PUZZLE_INPUT = Input.PUZZLE.loadCharGrid();
 
   @Test
-  public void testGetCheats() {
+  public void testGetCheats_testInput() {
     var timeCounts = Day20.getCheats(TEST_INPUT);
     assertThat(timeCounts.get(64)).isEqualTo(1);
     assertThat(timeCounts.get(40)).isEqualTo(1);
@@ -35,6 +35,26 @@ public class Day20Test {
             .mapToLong(Entry::getValue)
             .sum();
     assertThat(cheatsAtLeast100).isEqualTo(1409L);
+  }
+
+  @Test
+  public void testGetLongCheats_testInput() {
+    var timeCounts = Day20.getLongCheats(TEST_INPUT);
+    assertThat(timeCounts.get(76)).isEqualTo(3);
+    assertThat(timeCounts.get(74)).isEqualTo(4);
+    assertThat(timeCounts.get(52)).isEqualTo(31);
+    assertThat(timeCounts.get(50)).isEqualTo(32);
+  }
+
+  @Test
+  public void testGetLongCheats_puzzleInput() {
+    var timeCounts = Day20.getLongCheats(PUZZLE_INPUT);
+    var cheatsAtLeast100 =
+        timeCounts.entrySet().stream()
+            .filter(e -> e.getKey() >= 100)
+            .mapToLong(Entry::getValue)
+            .sum();
+    assertThat(cheatsAtLeast100).isEqualTo(1012821L);
   }
 
   @Test
