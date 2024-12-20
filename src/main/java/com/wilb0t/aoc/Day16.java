@@ -1,8 +1,10 @@
 package com.wilb0t.aoc;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -10,23 +12,71 @@ import java.util.stream.Stream;
 public class Day16 {
 
   public static long getLowestPath(char[][] maze) {
-    var start = getPos(maze, 'S');
-    var next = new PriorityQueue<>(Comparator.comparing(State::score));
-    next.add(new State(start, Dir.E, 0));
-    var visited = new HashSet<Pos>();
-    var shortestPath = Long.MAX_VALUE;
-
-    while (!next.isEmpty()) {
-      var cur = next.remove();
-      if (maze[cur.pos.row][cur.pos.col] == 'E') {
-        shortestPath = Math.min(shortestPath, cur.score);
-      } else if (!visited.contains(cur.pos)) {
-        visited.add(cur.pos);
-        next.addAll(cur.nbors(maze));
+    var rows = maze.length;
+    var cols = maze[0].length;
+    var dist = new HashMap<Node, Integer>();
+    var unvisited = new PriorityQueue<Node>(Comparator.comparing(dist::get));
+    Pos end = null;
+    Pos start = null;
+    for (var row = 0; row < rows; row++) {
+      for (var col = 0; col < cols; col++) {
+        if (maze[row][col] != '#') {
+          var pos = new Pos(row, col);
+          if (maze[row][col] == 'E') {
+            end = pos;
+          }
+          if (maze[row][col] == 'S') {
+            start = pos;
+          }
+//          for (var dir : Dir.values()) {
+//            var node = new Node(pos, dir);
+//            dist.put(node, Integer.MAX_VALUE);
+//          }
+          if (maze[row + 1][col] != '#') {
+            dist.put(new Node(pos, Dir.S), Integer.MAX_VALUE);
+          }
+          if (maze[row - 1][col] != '#') {
+            dist.put(new Node(pos, Dir.N), Integer.MAX_VALUE);
+          }
+          if (maze[row][col - 1] != '#') {
+            dist.put(new Node(pos, Dir.E), Integer.MAX_VALUE);
+          }
+          if (maze[row][col + 1] != '#') {
+            dist.put(new Node(pos, Dir.W), Integer.MAX_VALUE);
+          }
+        }
       }
     }
-    return shortestPath;
+    dist.put(new Node(start, Dir.E), 0);
+    unvisited.addAll(dist.keySet());
+
+    while (!unvisited.isEmpty() && dist.get(unvisited.peek()) != Integer.MAX_VALUE) {
+      var cur = unvisited.poll();
+      var nbors = List.of(
+          new Node(new Pos(cur.pos.row - 1, cur.pos.col), Dir.N),
+          new Node(new Pos(cur.pos.row, cur.pos.col + 1), Dir.E),
+          new Node(new Pos(cur.pos.row + 1, cur.pos.col), Dir.S),
+          new Node(new Pos(cur.pos.row, cur.pos.col - 1), Dir.W));
+      for (var node : nbors) {
+        if (unvisited.contains(node)) {
+          var cost = 1 + (Math.abs(cur.dir.ordinal() - node.dir.ordinal()) * 1000) + dist.get(cur);
+          if (dist.get(node) > cost) {
+            unvisited.remove(node);
+            dist.put(node, cost);
+            unvisited.add(node);
+          }
+        }
+      }
+    }
+    var eend = end;
+    return dist.entrySet().stream()
+        .filter(e -> e.getKey().pos.equals(eend))
+        .min(Comparator.comparingInt(Entry::getValue))
+        .get()
+        .getValue();
   }
+
+  record Node(Pos pos, Dir dir) {}
 
   public static long getBestSeatCount(char[][] maze) {
     return 0;

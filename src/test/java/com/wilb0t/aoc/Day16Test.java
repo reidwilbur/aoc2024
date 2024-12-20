@@ -20,7 +20,7 @@ public class Day16Test {
     assertThat(Day16.getLowestPath(PUZZLE_INPUT)).isEqualTo(115500L);
   }
 
-  // @Test
+  @Test
   public void testGetBestSeatCount_testInput() {
     assertThat(Day16.getBestSeatCount(TEST_INPUT)).isEqualTo(45);
     assertThat(Day16.getBestSeatCount(TEST_INPUT2)).isEqualTo(64);
