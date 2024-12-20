@@ -9,9 +9,10 @@ public class Day19 {
 
   public static int getValidDesignCount(Input input) {
     var cache = new HashMap<String, Boolean>();
-    return (int) input.designs.stream()
-        .filter(design -> isValidDesign(input.patterns, design, cache))
-        .count();
+    return (int)
+        input.designs.stream()
+            .filter(design -> isValidDesign(input.patterns, design, cache))
+            .count();
   }
 
   public static long getValidDesignCombos(Input input) {

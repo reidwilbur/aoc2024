@@ -21,7 +21,8 @@ public class Day20 {
         cheats.put(new Cheat(first, last), cheatTime);
       }
     }
-    return cheats.entrySet().stream().collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
+    return cheats.entrySet().stream()
+        .collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
   }
 
   public static Map<Integer, Long> getLongCheats(char[][] map) {
@@ -38,7 +39,8 @@ public class Day20 {
         }
       }
     }
-    return cheats.entrySet().stream().collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
+    return cheats.entrySet().stream()
+        .collect(Collectors.groupingBy(Map.Entry::getValue, Collectors.counting()));
   }
 
   record Cheat(Pos start, Pos end) {}
@@ -47,7 +49,7 @@ public class Day20 {
     var rows = map.length;
     var cols = map[0].length;
     var times = new HashMap<Pos, Integer>();
-    var start = new Pos(0,  0);
+    var start = new Pos(0, 0);
     var end = new Pos(0, 0);
     for (var row = 0; row < rows; row++) {
       for (var col = 0; col < cols; col++) {
@@ -67,7 +69,11 @@ public class Day20 {
     var cur = start;
     times.put(start, 0);
     while (!cur.equals(end)) {
-      var next = cur.nbors().filter(nbor -> times.containsKey(nbor) && times.get(nbor) == 0).findFirst().get();
+      var next =
+          cur.nbors()
+              .filter(nbor -> times.containsKey(nbor) && times.get(nbor) == 0)
+              .findFirst()
+              .get();
       time += 1;
       times.put(next, time);
       cur = next;

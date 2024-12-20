@@ -1,11 +1,8 @@
 package com.wilb0t.aoc;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
-import static org.assertj.core.api.Assertions.setPrintAssertionsDescription;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 public class Day17Test {
@@ -22,29 +19,29 @@ public class Day17Test {
 
   @Test
   public void testCompy2() {
-    var compy = new Day17.ThreeBitCompy(10, 0, 0, List.of(5,0,5,1,5,4));
+    var compy = new Day17.ThreeBitCompy(10, 0, 0, List.of(5, 0, 5, 1, 5, 4));
     compy.run();
-    assertThat(compy.out).isEqualTo(List.of(0,1,2));
+    assertThat(compy.out).isEqualTo(List.of(0, 1, 2));
   }
 
   @Test
   public void testCompy3() {
-    var compy = new Day17.ThreeBitCompy(2024, 0, 0, List.of(0,1,5,4,3,0));
+    var compy = new Day17.ThreeBitCompy(2024, 0, 0, List.of(0, 1, 5, 4, 3, 0));
     compy.run();
-    assertThat(compy.out).isEqualTo(List.of(4,2,5,6,7,7,7,7,3,1,0));
+    assertThat(compy.out).isEqualTo(List.of(4, 2, 5, 6, 7, 7, 7, 7, 3, 1, 0));
     assertThat(compy.regA).isEqualTo(0);
   }
 
   @Test
   public void testCompy4() {
-    var compy = new Day17.ThreeBitCompy(0, 29, 0, List.of(1,7));
+    var compy = new Day17.ThreeBitCompy(0, 29, 0, List.of(1, 7));
     compy.run();
     assertThat(compy.regB).isEqualTo(26);
   }
 
   @Test
   public void testCompy5() {
-    var compy = new Day17.ThreeBitCompy(0, 2024, 43690, List.of(4,0));
+    var compy = new Day17.ThreeBitCompy(0, 2024, 43690, List.of(4, 0));
     compy.run();
     assertThat(compy.regB).isEqualTo(44354);
   }
@@ -61,19 +58,21 @@ public class Day17Test {
 
   @Test
   public void testOutputSame_testInput() {
-    var input = new Day17.Input(117440, 0 , 0, List.of(0,3,5,4,3,0));
+    var input = new Day17.Input(117440, 0, 0, List.of(0, 3, 5, 4, 3, 0));
     assertThat(Day17.concatOutput(input)).isEqualTo("0,3,5,4,3,0");
 
-    //assertThat(Day17.findRegAVal(input)).isEqualTo(117440);
+    // assertThat(Day17.findRegAVal(input)).isEqualTo(117440);
   }
 
   @Test
   public void testOutputSame_puzzleInput() {
-    //var start = (long)Math.pow(8, 15) + 0b111;
-    //var start = (long)Math.pow(8, 15) + (32L) + 0b101L;
-    var start = (long)Math.pow(8, 15) + (0b101L << 3*15);
-    var expOut = PUZZLE_INPUT.mem().stream().map(i -> (long)i).toList();
-    var input = new Day17.Input(start + 0b111, PUZZLE_INPUT.regB(), PUZZLE_INPUT.regC(), PUZZLE_INPUT.mem());
+    // var start = (long)Math.pow(8, 15) + 0b111;
+    // var start = (long)Math.pow(8, 15) + (32L) + 0b101L;
+    var start = (long) Math.pow(8, 15) + (0b101L << 3 * 15);
+    var expOut = PUZZLE_INPUT.mem().stream().map(i -> (long) i).toList();
+    var input =
+        new Day17.Input(
+            start + 0b111, PUZZLE_INPUT.regB(), PUZZLE_INPUT.regC(), PUZZLE_INPUT.mem());
     var out = Day17.getOutput(input);
     assertThat(out).isEqualTo(expOut);
   }

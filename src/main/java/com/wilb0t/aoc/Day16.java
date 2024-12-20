@@ -2,7 +2,6 @@ package com.wilb0t.aoc;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.PriorityQueue;
@@ -28,21 +27,9 @@ public class Day16 {
           if (maze[row][col] == 'S') {
             start = pos;
           }
-//          for (var dir : Dir.values()) {
-//            var node = new Node(pos, dir);
-//            dist.put(node, Integer.MAX_VALUE);
-//          }
-          if (maze[row + 1][col] != '#') {
-            dist.put(new Node(pos, Dir.S), Integer.MAX_VALUE);
-          }
-          if (maze[row - 1][col] != '#') {
-            dist.put(new Node(pos, Dir.N), Integer.MAX_VALUE);
-          }
-          if (maze[row][col - 1] != '#') {
-            dist.put(new Node(pos, Dir.E), Integer.MAX_VALUE);
-          }
-          if (maze[row][col + 1] != '#') {
-            dist.put(new Node(pos, Dir.W), Integer.MAX_VALUE);
+          for (var dir : Dir.values()) {
+            var node = new Node(pos, dir);
+            dist.put(node, Integer.MAX_VALUE);
           }
         }
       }
@@ -52,18 +39,26 @@ public class Day16 {
 
     while (!unvisited.isEmpty() && dist.get(unvisited.peek()) != Integer.MAX_VALUE) {
       var cur = unvisited.poll();
-      var nbors = List.of(
-          new Node(new Pos(cur.pos.row - 1, cur.pos.col), Dir.N),
-          new Node(new Pos(cur.pos.row, cur.pos.col + 1), Dir.E),
-          new Node(new Pos(cur.pos.row + 1, cur.pos.col), Dir.S),
-          new Node(new Pos(cur.pos.row, cur.pos.col - 1), Dir.W));
-      for (var node : nbors) {
-        if (unvisited.contains(node)) {
-          var cost = 1 + (Math.abs(cur.dir.ordinal() - node.dir.ordinal()) * 1000) + dist.get(cur);
-          if (dist.get(node) > cost) {
-            unvisited.remove(node);
-            dist.put(node, cost);
-            unvisited.add(node);
+      var nbors =
+          List.of(
+              new Node(new Pos(cur.pos.row - 1, cur.pos.col), Dir.N),
+              new Node(new Pos(cur.pos.row + 1, cur.pos.col), Dir.S),
+              new Node(new Pos(cur.pos.row, cur.pos.col + 1), Dir.E),
+              new Node(new Pos(cur.pos.row, cur.pos.col - 1), Dir.W));
+      for (var nbor : nbors) {
+        if (dist.containsKey(nbor) && unvisited.contains(nbor)) {
+          var turnCost =
+              switch (Math.abs(cur.dir.ordinal() - nbor.dir.ordinal())) {
+                case 0 -> 0;
+                case 1, 3 -> 1000;
+                case 2 -> 2000;
+                default -> throw new IllegalStateException("Unexpected value: " + cur.dir);
+              };
+          var alt = 1 + turnCost + dist.get(cur);
+          if (dist.get(nbor) > alt) {
+            unvisited.remove(nbor);
+            dist.put(nbor, alt);
+            unvisited.add(nbor);
           }
         }
       }
