@@ -25,4 +25,10 @@ public class Day16Test {
     assertThat(Day16.getBestSeatCount(TEST_INPUT)).isEqualTo(45);
     assertThat(Day16.getBestSeatCount(TEST_INPUT2)).isEqualTo(64);
   }
+
+  @Test
+  public void testGetBestSeatCount_puzzleInput() {
+    var count = Day16.getBestSeatCount(PUZZLE_INPUT);
+    assertThat(count).isEqualTo(679L);
+  }
 }
