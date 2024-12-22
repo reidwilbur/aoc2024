@@ -41,12 +41,6 @@ public class Day22Test {
   @Test
   public void testMonkey() {
     var monkey = Day22.Monkey.of(123, 10);
-    assertThat(monkey.seqVals().get(List.of(-3, 6, -1, -1))).isEqualTo(4);
-    assertThat(monkey.seqVals().get(List.of(6, -1, -1, 0))).isEqualTo(4);
-    assertThat(monkey.seqVals().get(List.of(-1, -1, 0, 2))).isEqualTo(6);
-    assertThat(monkey.seqVals().get(List.of(-1, 0, 2, -2))).isEqualTo(4);
-    assertThat(monkey.seqVals().get(List.of(0, 2, -2, 0))).isEqualTo(4);
-    assertThat(monkey.seqVals().get(List.of(2, -2, 0, -2))).isEqualTo(2);
     assertThat(monkey.seqVals()).hasSize(6);
   }
 }

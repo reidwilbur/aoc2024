@@ -3,7 +3,6 @@ package com.wilb0t.aoc;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 public class Day22 {
@@ -22,7 +21,7 @@ public class Day22 {
 
   public static long getMaxBananas(int[] input) {
     var monkeys = new ArrayList<Monkey>();
-    var seqs = new HashSet<List<Integer>>();
+    var seqs = new HashSet<Integer>();
     for (var num : input) {
       var monkey = Monkey.of(num, 2000);
       monkeys.add(monkey);
@@ -30,7 +29,6 @@ public class Day22 {
     }
 
     var maxBananas = 0;
-    var maxSeq = List.<Integer>of();
     for (var seq : seqs) {
       var bananas = 0;
       for (var monkey : monkeys) {
@@ -38,13 +36,12 @@ public class Day22 {
       }
       if (bananas > maxBananas) {
         maxBananas = bananas;
-        maxSeq = seq;
       }
     }
     return maxBananas;
   }
 
-  public record Monkey(Map<List<Integer>, Integer> seqVals) {
+  public record Monkey(Map<Integer, Integer> seqVals) {
     public static Monkey of(int snum, int numDiffs) {
       var diffs = new ArrayList<Integer>();
       var nums = new ArrayList<Integer>();
@@ -57,11 +54,14 @@ public class Day22 {
         last = next;
       }
 
-      var seqVals = new HashMap<List<Integer>, Integer>(numDiffs - 4);
+      var seqVals = new HashMap<Integer, Integer>(numDiffs - 4);
       for (var i = 0; i < diffs.size() - 4; i++) {
-        var seq = List.of(diffs.get(i), diffs.get(i + 1), diffs.get(i + 2), diffs.get(i + 3));
-        if (!seqVals.containsKey(seq)) {
-          seqVals.put(seq, nums.get(i + 3));
+        var hash = ((0xf & (diffs.get(i + 0) + 9)) << 12)
+                 + ((0xf & (diffs.get(i + 1) + 9)) << 8)
+                 + ((0xf & (diffs.get(i + 2) + 9)) << 4)
+                 + ((0xf & (diffs.get(i + 3) + 9)));
+        if (!seqVals.containsKey(hash)) {
+          seqVals.put(hash, nums.get(i + 3));
         }
       }
       return new Monkey(seqVals);
