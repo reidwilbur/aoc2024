@@ -56,10 +56,11 @@ public class Day22 {
 
       var seqVals = new HashMap<Integer, Integer>(numDiffs - 4);
       for (var i = 0; i < diffs.size() - 4; i++) {
-        var hash = ((0xf & (diffs.get(i + 0) + 9)) << 12)
-                 + ((0xf & (diffs.get(i + 1) + 9)) << 8)
-                 + ((0xf & (diffs.get(i + 2) + 9)) << 4)
-                 + ((0xf & (diffs.get(i + 3) + 9)));
+        var hash =
+            ((0xf & (diffs.get(i + 0) + 9)) << 12)
+                + ((0xf & (diffs.get(i + 1) + 9)) << 8)
+                + ((0xf & (diffs.get(i + 2) + 9)) << 4)
+                + ((0xf & (diffs.get(i + 3) + 9)));
         if (!seqVals.containsKey(hash)) {
           seqVals.put(hash, nums.get(i + 3));
         }

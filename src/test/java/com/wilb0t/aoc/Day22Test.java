@@ -2,7 +2,6 @@ package com.wilb0t.aoc;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
 import org.junit.jupiter.api.Test;
 
 public class Day22Test {

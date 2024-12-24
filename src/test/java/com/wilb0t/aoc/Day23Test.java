@@ -20,4 +20,15 @@ public class Day23Test {
   public void testGetHistorianLanGames_puzzleInput() {
     assertThat(Day23.getHistorianLanGames(PUZZLE_INPUT)).isEqualTo(1253);
   }
+
+  @Test
+  public void testGetLanPassword_testInput() {
+    assertThat(Day23.getLanPassword(TEST_INPUT)).isEqualTo("co,de,ka,ta");
+  }
+
+  @Test
+  public void testGetLanPassword_puzzleInput() {
+    assertThat(Day23.getLanPassword(PUZZLE_INPUT))
+        .isEqualTo("ag,bt,cq,da,hp,hs,mi,pa,qd,qe,qi,ri,uq");
+  }
 }
